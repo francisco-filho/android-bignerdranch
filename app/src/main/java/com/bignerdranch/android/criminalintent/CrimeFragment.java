@@ -14,21 +14,37 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 
 import java.util.Date;
+import java.util.UUID;
+
+import static com.bignerdranch.android.criminalintent.CrimeActivity.EXTRA_CRIME_ID;
 
 /**
  * Created by francisco on 19/09/17.
  */
 
 public class CrimeFragment extends Fragment {
+    private static String ARGS_CRIME_ID = "crimeId";
     private Crime mCrime;
     private EditText mTitleField;
     private Button mDateButton;
     private CheckBox mSolvedCheckBox;
 
+    public static CrimeFragment newInstance(UUID uuid) {
+        Bundle args = new Bundle();
+        args.putSerializable(ARGS_CRIME_ID, uuid);
+        CrimeFragment cf = new CrimeFragment();
+        cf.setArguments(args);
+        return cf;
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mCrime = new Crime();
+
+        UUID uuid = (UUID)getArguments()
+                .getSerializable(ARGS_CRIME_ID);
+
+        mCrime = CrimeLab.get(getActivity()).getCrime(uuid);
     }
 
     @Nullable
@@ -40,6 +56,8 @@ public class CrimeFragment extends Fragment {
         mDateButton = (Button) fragmentLayout.findViewById(R.id.crime_date);
         mSolvedCheckBox = (CheckBox) fragmentLayout.findViewById(R.id.crime_solved);
 
+        mTitleField.setText(mCrime.getTitle());
+        mSolvedCheckBox.setChecked(mCrime.isSolved());
         mDateButton.setText(mCrime.getDate().toString());
         mDateButton.setEnabled(false);
 
