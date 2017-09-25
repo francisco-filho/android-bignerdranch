@@ -1,5 +1,7 @@
 package com.bignerdranch.android.criminalintent;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -16,13 +18,12 @@ import android.widget.EditText;
 import java.util.Date;
 import java.util.UUID;
 
-import static com.bignerdranch.android.criminalintent.CrimeActivity.EXTRA_CRIME_ID;
-
 /**
  * Created by francisco on 19/09/17.
  */
 
 public class CrimeFragment extends Fragment {
+    private static final int REQUEST_DATE = 0;
     private static String ARGS_CRIME_ID = "crimeId";
     private Crime mCrime;
     private EditText mTitleField;
@@ -59,7 +60,15 @@ public class CrimeFragment extends Fragment {
         mTitleField.setText(mCrime.getTitle());
         mSolvedCheckBox.setChecked(mCrime.isSolved());
         mDateButton.setText(mCrime.getDate().toString());
-        mDateButton.setEnabled(false);
+
+        mDateButton.setOnClickListener((view) -> {
+            FragmentManager fm = getFragmentManager();
+            DatePickerFragment datePickerFragment =
+                    DatePickerFragment.newInstance(mCrime.getDate());
+            datePickerFragment.setTargetFragment(CrimeFragment.this, REQUEST_DATE);
+            datePickerFragment.show(fm, "DATE_PICKER_TAG");
+        });
+
 
         mTitleField.addTextChangedListener(new TextWatcher() {
             @Override
@@ -79,5 +88,14 @@ public class CrimeFragment extends Fragment {
         });
 
         return fragmentLayout;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_DATE && resultCode == Activity.RESULT_OK) {
+            Date date = (Date)data.getSerializableExtra(DatePickerFragment.EXTRA_DATE);
+            mCrime.setDate(date);
+            mDateButton.setText(mCrime.getDate().toString());
+        }
     }
 }
