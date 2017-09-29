@@ -10,7 +10,7 @@ import static com.bignerdranch.android.criminalintent.database.CrimeDbSchema.Cri
  */
 
 public class CrimeBaseHelper extends SQLiteOpenHelper {
-    public static final int VERSION = 1;
+    public static final int VERSION = 2;
     public static final String DATABASE_NAME = "crimeBase.db";
 
     public CrimeBaseHelper(Context context) {
@@ -30,12 +30,18 @@ public class CrimeBaseHelper extends SQLiteOpenHelper {
                 CrimeTable.Cols.UUID,
                 CrimeTable.Cols.TITLE,
                 CrimeTable.Cols.DATE,
-                CrimeTable.Cols.SOLVED)
+                CrimeTable.Cols.SOLVED
+            )
         );
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-
+        if (i1 > i)
+            sqLiteDatabase.execSQL(String.format(
+                    "ALTER TABLE %s ADD COLUMN %s string",
+                    CrimeTable.NAME,
+                    CrimeTable.Cols.SUSPECT
+            ));
     }
 }

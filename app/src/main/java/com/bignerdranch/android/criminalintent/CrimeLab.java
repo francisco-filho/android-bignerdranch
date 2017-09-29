@@ -7,13 +7,13 @@ import android.database.CursorWrapper;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.bignerdranch.android.criminalintent.database.CrimeBaseHelper;
-import com.bignerdranch.android.criminalintent.database.CrimeDbSchema;
-import static com.bignerdranch.android.criminalintent.database.CrimeDbSchema.CrimeTable;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
+
+import static com.bignerdranch.android.criminalintent.database.CrimeDbSchema.CrimeTable;
 
 /**
  * Created by francisco on 19/09/17.
@@ -74,6 +74,7 @@ public class CrimeLab {
         cv.put(CrimeTable.Cols.TITLE, c.getTitle());
         cv.put(CrimeTable.Cols.DATE, c.getDate().getTime());
         cv.put(CrimeTable.Cols.SOLVED, c.isSolved());
+        cv.put(CrimeTable.Cols.SUSPECT, c.getSuspect());
         return cv;
     }
 
@@ -114,11 +115,13 @@ public class CrimeLab {
             String title = getString(getColumnIndex(CrimeTable.Cols.TITLE));
             long date = getLong(getColumnIndex(CrimeTable.Cols.DATE));
             int solved = getInt(getColumnIndex(CrimeTable.Cols.SOLVED));
+            String suspect = getString(getColumnIndex(CrimeTable.Cols.SUSPECT));
 
             Crime c = new Crime(UUID.fromString(uuid));
             c.setTitle(title);
             c.setDate(new Date(date));
             c.setSolved(solved != 0);
+            c.setSuspect(suspect);
             return c;
         }
     }
