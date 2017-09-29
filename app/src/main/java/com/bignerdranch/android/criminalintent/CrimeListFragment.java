@@ -33,7 +33,6 @@ public class CrimeListFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-
     }
 
     @Override
@@ -105,13 +104,14 @@ public class CrimeListFragment extends Fragment {
     }
 
     private void updateIU() {
+        CrimeLab crimeLab = CrimeLab.get(getActivity());
+        List<Crime> crimes = crimeLab.getCrimes();
         if (mAdapter == null) {
-            CrimeLab crimeLab = CrimeLab.get(getActivity());
-            List<Crime> crimes = crimeLab.getCrimes();
             mAdapter = new CrimeAdapter(crimes);
             mCrimeRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
             mCrimeRecyclerView.setAdapter(mAdapter);
         } else {
+            mAdapter.setCrimes(crimes);
             mAdapter.notifyDataSetChanged();
         }
 
@@ -163,6 +163,10 @@ public class CrimeListFragment extends Fragment {
         public void onBindViewHolder(CrimeHolder holder, int position) {
             Crime c = mCrimeList.get(position);
             holder.bind(c);
+        }
+
+        public void setCrimes(List<Crime> crimes) {
+            this.mCrimeList = crimes;
         }
 
         @Override
