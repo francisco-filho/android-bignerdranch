@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class CrimePagerActivity extends AppCompatActivity {
+public class CrimePagerActivity extends AppCompatActivity implements CrimeFragment.Callbacks{
     public static final String EXTRA_CRIME_ID = "geoquiz.crimeId";
     List<Crime> mCrimes = new ArrayList<>();
     ViewPager mViewPager;
@@ -54,5 +54,10 @@ public class CrimePagerActivity extends AppCompatActivity {
         Intent intent = new Intent(context,CrimePagerActivity.class);
         intent.putExtra(EXTRA_CRIME_ID, crimeID);
         return intent;
+    }
+
+    @Override
+    public void onCrimeUpdated(Crime crime) {
+        System.out.println(crime);
     }
 }

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Intenção Criminosa</string>
+    <string name="crime_title_hint">Informe o título do crime</string>
+    <string name="crime_title_label">Título</string>
+    <string name="crime_details_label">Detalhes</string>
+    <string name="crime_solved_label">Resolvido</string>
+    <string name="date_picker_title">Data do crime</string>
+    <string name="new_crime">Novo crime</string>
+    <string name="show_subtitle">Mostrar subtítulo</string>
+    <string name="hide_subtitle">Ocultar subtítulo</string>
+    <string name="subtitle_format">%1$d crimes</string>
+    <string name="crime_suspect_text">Selecione o suspeito</string>
+    <string name="crime_report_text">Enviar relatório do crime</string>
+    <string name="crime_report">O crime foi descoberto em %2$s.%3$s e %4$s</string>
+    <string name="crime_report_solved">O caso foi resolvido</string>
+    <string name="crime_report_unsolved">O caso não foi resolvido</string>
+    <string name="crime_report_no_suspect">não há suspeitos</string>
+    <string name="crime_report_suspect">o suspeito é %s</string>
+    <string name="crime_report_subject">Relatório de IntençãoCriminosa</string>
+    <string name="send_report">Enviar relatório com</string>
+</resources>
